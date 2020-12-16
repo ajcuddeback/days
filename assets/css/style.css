@@ -8,8 +8,13 @@ body {
   background: #17181a;
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
+  /* Must have relative position for the main absolue positioning */
+  position: relative;
 }
-
+/* Position absolue on container getting changed from barba. Has to be there or the website will look like it is "Poping" in */
+main {
+  position: absolute;
+}
 #logo {
   color: white;
   position: absolute;

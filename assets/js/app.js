@@ -108,7 +108,51 @@ function navToggle(e) {
         document.body.classList.remove('.hide');
     }
 }
+
+// Barba Page transitions
+const logo = document.querySelector('#logo');
+barba.init({
+    views: [
+        {
+            namespace: 'home',
+            // Before we enter run this function
+            beforeEnter() {
+                animateSlides();
+                logo.href = './index.html'
+            },
+            // Before we leave to the next page destory all gsap and scroll animations
+            beforeLeave() {
+                slideScene.destroy();
+                pageScene.destroy();
+                controller.destroy();
+            }
+        },
+        {
+            namespace: 'fashion',
+            beforeEnter() {
+                logo.href = '../index.html'
+            }
+        }
+    ],
+    transitions: [
+        {
+            leave({ current, next }) {
+                let done = this.async();
+                // animation
+                const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } })
+                tl.fromTo(current.container, 1, { opacity: 1 }, { opacity: 0, onComplete: done })
+            },
+            enter({ current, next }) {
+                let done = this.async();
+                window.scrollTo(0, 0)
+                const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } })
+                tl.fromTo(next.container, 1, { opacity: 0 }, { opacity: 1, onComplete: done })
+            }
+        }
+    ]
+})
+
+
 window.addEventListener('mousemove', cursor);
 window.addEventListener('mouseover', activeCursor)
 burger.addEventListener('click', navToggle)
-animateSlides()

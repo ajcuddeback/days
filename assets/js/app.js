@@ -42,7 +42,7 @@ function animateSlides() {
             // this tween will make the gsap animation (slideTl) only happen when the scroll magic gets triggered
             .setTween(slideTl)
             // indicators with custom name and colors
-            .addIndicators({ colorStart: 'white', colorTrigger: 'white', name: 'slide' })
+            // .addIndicators({ colorStart: 'white', colorTrigger: 'white', name: 'slide' })
             //This will add to the controller
             .addTo(controller)
         // New Animation
@@ -58,7 +58,7 @@ function animateSlides() {
             duration: '100%',
             triggerHook: 0
         })
-            .addIndicators({ colorStart: 'white', colorTrigger: 'white', name: 'page', indent: 200 })
+            // .addIndicators({ colorStart: 'white', colorTrigger: 'white', name: 'page', indent: 200 })
             // This pin will pin the slide div to the screen while animation is running. Kind of like position fixed
             //push followers will make the next item coming in come in right away
             .setPin(slide, { pushFollowers: false })

@@ -12,6 +12,7 @@ body {
 
 #logo {
   color: white;
+  position: absolute;
   font-family: "Abril Fatface";
 }
 
@@ -25,6 +26,8 @@ body {
   width: 80%;
   margin: auto;
   padding: 2rem 0rem;
+  z-index: 2;
+  position: relative;
 }
 
 .line1,
@@ -156,7 +159,7 @@ body {
   transform-origin: 75% 75%;
 }
 .cursor.nav-active {
-  background: rgba(86, 124, 228, 0.7);
+  background: rgba(86, 124, 228, 0.6);
   transform: scale(2);
 }
 .cursor.explore-active {
@@ -195,4 +198,7 @@ body {
 /* This will git rid of pin spacer problems */
 .scrollmagic-pin-spacer {
   position: static !important;
+}
+body.hide {
+  overflow: hidden;
 }

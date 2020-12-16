@@ -112,6 +112,7 @@ function navToggle(e) {
 // Barba Page transitions
 const logo = document.querySelector('#logo');
 barba.init({
+    // this is where you can edit specific items per page
     views: [
         {
             namespace: 'home',
@@ -131,22 +132,28 @@ barba.init({
             namespace: 'fashion',
             beforeEnter() {
                 logo.href = '../index.html'
+                gsap.fromTo('.nav-header', 1, { y: '100%' }, { y: '0%', ease: 'power2.inOut' })
             }
         }
     ],
+    // these transitions will happen to both pages 
     transitions: [
         {
+            // using the current as the current content page you are on. anything that gets done in here is when you leave
             leave({ current, next }) {
                 let done = this.async();
                 // animation
                 const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } })
-                tl.fromTo(current.container, 1, { opacity: 1 }, { opacity: 0, onComplete: done })
+                tl.fromTo(current.container, 1, { opacity: 1 }, { opacity: 0 })
+                tl.fromTo('.swipe', 0.75, { x: '-100%' }, { x: '0%', onComplete: done }, '-=.05')
             },
+            // Once you have started to enter in to new page this stuff will happen
             enter({ current, next }) {
                 let done = this.async();
                 window.scrollTo(0, 0)
                 const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } })
-                tl.fromTo(next.container, 1, { opacity: 0 }, { opacity: 1, onComplete: done })
+                tl.fromTo('.swipe', 1, { x: '0' }, { x: '100%', stagger: 0.25, onComplete: done })
+                tl.fromTo(next.container, 1, { opacity: 0 }, { opacity: 1 })
             }
         }
     ]

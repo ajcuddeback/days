@@ -69,6 +69,7 @@ function animateSlides() {
 const mouse = document.querySelector('.cursor');
 const mouseText = mouse.querySelector('span');
 const burger = document.querySelector('.burger')
+let detailScene;
 function cursor(e) {
     mouse.style.top = e.pageY + "px";
     mouse.style.left = e.pageX + "px";
@@ -131,7 +132,8 @@ barba.init({
         {
             namespace: 'fashion',
             beforeEnter() {
-                logo.href = '../index.html'
+                logo.href = '../index.html';
+                detailAnimation();
                 gsap.fromTo('.nav-header', 1, { y: '100%' }, { y: '0%', ease: 'power2.inOut' })
             }
         }
@@ -159,6 +161,29 @@ barba.init({
     ]
 })
 
+function detailAnimation() {
+    controller = new ScrollMagic.Controller()
+    const slides = document.querySelectorAll('.detail-slide');
+    slides.forEach((slide, index, slides) => {
+        const slidesTl = gsap.timeline({ defaults: { duration: 1 } })
+        // this pretty much lets the program know that this is the next slide. 
+        let nextSlide = slides.length - 1 === index ? 'end' : slides[index + 1];
+        const nextImg = nextSlide.querySelector('img')
+        slidesTl.fromTo(slide, { opacity: 1 }, { opacity: 0 })
+        slidesTl.fromTo(nextSlide, { opacity: 0 }, { opacity: 1 }, "-=.05")
+        slidesTl.fromTo(nextImg, { x: '50%', ease: 'power2.inOut' }, { x: '0%' })
+
+        // scene
+        detailScene = new ScrollMagic.Scene({
+            triggerElement: slide,
+            duration: '100%',
+            triggerHook: 0
+        })
+            .setPin(slide, { pushFollowers: false })
+            .setTween(slidesTl)
+            .addTo(controller)
+    })
+}
 
 window.addEventListener('mousemove', cursor);
 window.addEventListener('mouseover', activeCursor)
